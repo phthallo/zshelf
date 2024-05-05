@@ -1,11 +1,12 @@
 {
-    "domain": "https://b-ok.global",
+    "domain": "https://z-library.se",
     "cookie": "",
     "additionalBookLocation": "/home/root/Books/",
+    "skipXochitl": "",
     "defaultQuery": {
         "exactMatch": "0",
-        "fromYear": "2020",
-        "toYear": "2021",
+        "fromYear": "2000",
+        "toYear": "2024",
         "language": "English",
         "extension": "epub",
         "order": "Most Popular",

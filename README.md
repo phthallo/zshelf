@@ -10,68 +10,54 @@
   <img src="https://i.imgur.com/38oxA3a.png" width="300" title="Search UI">
 </p>
 
+<p align = "center">This fork is not on Toltec.</p>
+
 ## Installation
-0. Know how to SSH to your device: https://remarkablewiki.com/tech/ssh
-1. Make sure package manager [toltec](https://github.com/toltec-dev/toltec/) is installed.
-2. Run following command to install zshelf:
-```bash
-opkg update
-opkg install zshelf
-```
-3. **[reMarkable 2 only]** You definitely need `rm2fb` package to run any app:
-```bash
-opkg install rm2fb
-```
+1. Download the latest release from the [Releases page](https://github.com/phthallo/zshelf/releases), and unzip it.
+2. [SSH into your device](https://remarkable.guide/guide/access/index.html).
+3. Move all the files in the release to your device to the location `/home/root/apps/` [Note: Install a launcher, such as [Remux](https://rmkit.dev/apps/remux) or [Oxide](https://oxide.eeems.codes/) to be able to open Zshelf.]
+4. Edit your `config.json` file, as instructed below.
+5. Start Z-library from your launcher. 
 
-## [IMPORTANT] Configure domain and cookie
-`zshelf` basically is a web crawler, which fetches and parses z-library web pages, gets the gist of them and natively displays book items on UI. Because it's not web browser, user needs to manually configure domain and cookie so `zshelf` can download books on demand. Free user account is still limited at downloading 10 books a day.
 
-1. Open [https://z-lib.org](https://z-lib.org) on your web browser
-2. Under "Books" link, you should notice domain part that is specifically available for your region/country. Note it down.  
+### [IMPORTANT] Configure Domain and Cookie
+As Z-Library does not allow anonymous downloads, you will need to configure your Z-library domain and session cookies to download from your reMarkable. This requires an existing account - free user accounts are limited to 10 books a day.
 
-<p align="center"><img src="https://i.imgur.com/khlqkaW.png" width="800"></p>
-
+1. Open [https://z-library.se](https://z-library.se) in your web browser. If this link doesn't work, refer to the [masterpost of official Z-library links](https://www.reddit.com/r/zlibrary/comments/16xtf95/how_to_access_zlibrary/)
 3. Log in with your account.
-4. In any page, open up Console (hit <kbd>F12</kbd> and switch to tab Console), run:
+4. In any page, open up Console (hit <kbd>F12</kbd> and switch to the Console tab), and run:
 ```js
 document.cookie
 ```
-It will return a string contains your ids. Copy the parts have `remix_userkey` and `remix_userid` and ignore the rest:
+It will return a string that conatins your cookie. Copy the parts that have `remix_userkey` and `remix_userid` and ignore the rest.
 
-<p align="center"><img src="https://i.imgur.com/OwkgSTp.png" width="800"></p>
-
-
-5. SSH to your reMarkable device and open config file:
+5. SSH into your reMarkable device and edit the config file:
 ```bash
-nano /opt/etc/zshelf/config.json
+nano /home/root/apps/config.json
 ```
+7. Enter the URL you used to access Z-library as the `"domain"` value.  
+8. Enter the string from above as the `"cookie"` value. 
+9. Save the file (In `nano`: <kbd>Ctrl + X</kbd> -> <kbd>Y</kbd> -> <kbd>Enter</kbd>).
 
-7. Replace keys `"domain"` and `"cookie"`'s values with yours.
 
-<p align="center"><img src="https://i.imgur.com/5dZfQrC.png" width="800"></p>
+#### Further Configuration
+By default, Zshelf saves downloaded ebooks to Xochitl. You can skip this by setting `"skipXochitl"` to anything other than a null value. 
+To save your ebooks to another location, set `"additionalBookLocation"` to the path of the location where you wish to save it. This is useful if you use an external reader, such as [Koreader](https://github.com/koreader/koreader/). 
 
-8. Save file (In `nano`: <kbd>Ctrl + X</kbd> -> <kbd>Y</kbd> -> <kbd>Enter</kbd>)
-9. Start zshelf to test configuration:
-```bash
-zshelf
-```
-
-reMarkable 2 user, use this instead:
-```bash
-LD_PRELOAD=/opt/lib/librm2fb_client.so.1.0.0 zshelf
-```
-
-Downloaded EPUB and PDF books will be automatically available on your reMarkable app (if not, please restart the app or restart device). `zshelf` also makes a copy of the book to location configured in `additionalBookLocation`, so you can open it in other reader like [`KOReader`](https://github.com/koreader/koreader/wiki/Installation-on-Remarkable), which has ten fold better reading experience, highly recommended and also available on `toltec`.
-
-Also, install an app launcher so that you can open zshelf easier. Recommend `oxide`, `draft` or `remux`, all of them are available on `toltec`.
 
 ## Development
-0. [Set up reMarkable toolchain](https://remarkablewiki.com/devel/qt_creator#toolchain), NodeJS and `npm`
-1. `git clone https://github.com/khanhas/zshelf`
-2. `qmake`
-3. `make`
-4. `cd backend`
-5. `node install`
+This section assumes the use of a Linux based system.
+0. [Set up reMarkable toolchain](https://remarkable.guide/devel/toolchains.html), NodeJS and `npm`
+1. Run `git clone https://github.com/phthallo/zshelf` and `cd` into it.
+2. Source the toolchain to load its environment variables. You will need to do this every time you open a new terminal.
+```bash
+$ source /opt/codex/rm11x/3.1.15/environment-setup-cortexa7hf-neon-remarkable-linux-gnueabi
+```
+3. Run `qmake`
+4. Run `make`
+5. Run `cd backend` to move to the backend folder.
+6. Run `npm install`. This will generate a `zshelf` file.
 
 ## Credits
 - [Qt-Quick-Keyboard](https://github.com/mireq/Qt-Quick-Keyboard) by mireq
+

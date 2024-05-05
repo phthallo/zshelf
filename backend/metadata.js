@@ -32,7 +32,7 @@ module.exports = function (args, socket) {
             description = detail;
         }
 
-        let dlUrl = $(".dlButton").attr("href");
+        let dlUrl = $("a.btn.btn-primary.addDownloadedBook").attr("href");
         if (dlUrl === "#") {
             dlUrl = "";
         }

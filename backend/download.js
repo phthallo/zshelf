@@ -1,7 +1,7 @@
 const { writeFileSync, copyFileSync, existsSync, mkdirSync, createWriteStream, constants } = require("fs");
 const { join: pathJoin, extname, basename } = require("path");
 const { v4 } = require("uuid");
-const { domain, fetchOptions, additionalBookLocation } = require("./common");
+const { domain, fetchOptions, additionalBookLocation, skipXochitl } = require("./common");
 const fetch = require("node-fetch");
 
 module.exports = function (args, socket) {
@@ -64,23 +64,25 @@ module.exports = function (args, socket) {
         fileStream.on('close', () => {
             socket.write("DOWNLOAD DONE\n");
 
-            if (fileExt == ".epub" || fileExt == ".pdf") {
-                writeFileSync(xochitlFolder + uuid + ".metadata", JSON.stringify({
-                    "deleted": false,
-                    "lastModified": "1",
-                    "lastOpenedPage": 0,
-                    "metadatamodified": false,
-                    "modified": false,
-                    "parent": "",
-                    "pinned": false,
-                    "synced": false,
-                    "type": "DocumentType",
-                    "version": 1,
-                    "visibleName": fileName
-                }));
+            if (!skipXochitl){
+                if (fileExt == ".epub" || fileExt == ".pdf") {
+                    writeFileSync(xochitlFolder + uuid + ".metadata", JSON.stringify({
+                        "deleted": false,
+                        "lastModified": "1",
+                        "lastOpenedPage": 0,
+                        "metadatamodified": false,
+                        "modified": false,
+                        "parent": "",
+                        "pinned": false,
+                        "synced": false,
+                        "type": "DocumentType",
+                        "version": 1,
+                        "visibleName": fileName
+                    }));
 
-                copyFileSync(tempFilePath, pathJoin(xochitlFolder, uuid + fileExt), constants.COPYFILE_FICLONE);
-                socket.write("COPIED XOCHITL\n");
+                    copyFileSync(tempFilePath, pathJoin(xochitlFolder, uuid + fileExt), constants.COPYFILE_FICLONE);
+                    socket.write("COPIED XOCHITL\n");
+                }
             }
 
             if (additionalBookLocation) {
