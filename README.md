@@ -17,7 +17,7 @@
 
 1. Download the latest release from the [Releases page](https://github.com/phthallo/zshelf/releases), and unzip it.
 2. [SSH into your device](https://remarkable.guide/guide/access/index.html).
-3. Move all the files in the release to your device to the location `/home/root/apps/` [Note: Install a launcher, such as [Remux](https://rmkit.dev/apps/remux) or [Oxide](https://oxide.eeems.codes/) to be able to open Zshelf.]
+3. Move the `backend` folder, `config.json` file and `zshelf` file in the release to your device to the location `/home/root/apps/` [Note: Install a launcher, such as [Remux](https://rmkit.dev/apps/remux) or [Oxide](https://oxide.eeems.codes/) to be able to open Zshelf.]
 4. Edit your `config.json` file, as instructed below.
 5. Start Z-library from your launcher.
 
