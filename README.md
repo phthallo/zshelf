@@ -32,7 +32,7 @@
 ### [IMPORTANT] Configure Domain and Cookie
 As Z-Library does not allow anonymous downloads, you will need to configure your Z-library domain and session cookies to download from your reMarkable. This requires an existing account - free user accounts are limited to 10 books a day.
 
-1. Open [https://z-library.se](https://z-library.se) in your web browser. If this link doesn't work, refer to the [masterpost of official Z-library links](https://www.reddit.com/r/zlibrary/comments/16xtf95/how_to_access_zlibrary/).
+1. Open [https://singlelogin.re](https://singlelogin.re) in your web browser. If this link doesn't work, refer to the [masterpost of official Z-library links](https://www.reddit.com/r/zlibrary/wiki/index/access/).
 3. Log in with your account.
 4. In any page, open up Console (hit <kbd>F12</kbd> and switch to the Console tab), and run:
   ```js
