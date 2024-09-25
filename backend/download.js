@@ -11,8 +11,8 @@ module.exports = function (args, socket) {
     }
 
     const xochitlFolder = "/home/root/.local/share/remarkable/xochitl/";
-    const downloadURL = domain + args[0];
-    console.log(downloadURL);
+    const downloadURL = new URL(args[0]).searchParams.get("download_location");
+    socket.write("Fetching download from: " + downloadURL);
 
     fetch(downloadURL, fetchOptions).then((response) => {
         console.log("Redirected to:", response.url);
